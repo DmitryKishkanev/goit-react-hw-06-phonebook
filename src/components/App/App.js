@@ -1,22 +1,17 @@
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactForm from 'components/ContactForm';
 import Filter from 'components/Filter';
 import ContactList from 'components/ContactList';
-// import initialContacts from 'contacts.json';
 import {
   insertContact,
   removeContact,
-  updateFilter,
+  setFilter,
 } from '../../redux/phonebook/phonebookSlice';
 import { Container } from 'components/App/App.styled';
 
 export default function App() {
   const { contacts, filter } = useSelector(state => state.phonebook);
   const dispatch = useDispatch();
-
-  // const [contacts, setContacts] = useState(initialContacts);
-  const [filterField, setFilterField] = useState('');
 
   const addContact = newContact => {
     const isNamePresent = contacts.some(
@@ -28,26 +23,19 @@ export default function App() {
       return;
     }
 
-    // setContacts(prevContacts => [newContact, ...prevContacts]);
-
     dispatch(insertContact(newContact));
   };
 
   const deleteContact = contactId => {
     dispatch(removeContact(contactId));
-
-    // setContacts(prevContacts =>
-    //   prevContacts.filter(contact => contact.id !== contactId),
-    // );
   };
 
   const changeFilter = e => {
-    setFilterField(e.currentTarget.value);
+    dispatch(setFilter(e.currentTarget.value));
   };
 
   const getFilteredCntacts = () => {
-    const normalizedFilter = filterField.toLowerCase();
-    dispatch(updateFilter(normalizedFilter));
+    const normalizedFilter = filter.toLowerCase();
 
     return contacts.filter(contact =>
       contact.name.toLocaleLowerCase().includes(normalizedFilter),

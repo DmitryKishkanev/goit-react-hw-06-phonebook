@@ -6,19 +6,20 @@ export const phonebookSlice = createSlice({
   initialState: phonebookInitialState,
   reducers: {
     insertContact: (state, action) => {
-      return state.push(action.payload);
+      state.contacts.push(action.payload);
     },
 
     removeContact: (state, action) => {
-      return state.filter(contact => contact.id !== action.payload);
+      state.contacts = state.contacts.filter(
+        contact => contact.id !== action.payload,
+      );
     },
 
-    updateFilter: (state, action) => {
-      //   return state.filter(contact => contact.name.includes(action.payload));
+    setFilter: (state, action) => {
       state.filter = action.payload;
     },
   },
 });
 
-export const { insertContact, removeContact, updateFilter } =
+export const { insertContact, removeContact, setFilter } =
   phonebookSlice.actions;
