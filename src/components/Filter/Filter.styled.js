@@ -4,7 +4,6 @@ const FilterLabel = styled.label`
   display: flex;
   flex-direction: column;
   margin-right: auto;
-  margin-left: 315px;
   margin-bottom: 30px;
 
   span {

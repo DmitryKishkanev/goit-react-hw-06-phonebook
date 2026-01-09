@@ -1,10 +1,22 @@
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeContact } from '../../redux/phonebook/phonebookSlice';
 import { ContactEl } from 'components/ContactItem/ContactItem.styled';
 
-const ContactItem = ({ contacts, handleDeleteContact }) => {
+const ContactItem = () => {
+  const { contacts, filter } = useSelector(state => state.phonebook);
+  const dispatch = useDispatch();
+
+  const handleDeleteContact = contactId => {
+    dispatch(removeContact(contactId));
+  };
+
+  const filteredCntacts = contacts.filter(contact =>
+    contact.name.toLocaleLowerCase().includes(filter.toLowerCase()),
+  );
+
   return (
     <>
-      {contacts.map(({ id, name, number }) => (
+      {filteredCntacts.map(({ id, name, number }) => (
         <ContactEl key={id}>
           <div>
             <p>
@@ -17,17 +29,6 @@ const ContactItem = ({ contacts, handleDeleteContact }) => {
       ))}
     </>
   );
-};
-
-ContactItem.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  onDeleteContact: PropTypes.func.isRequired,
 };
 
 export default ContactItem;

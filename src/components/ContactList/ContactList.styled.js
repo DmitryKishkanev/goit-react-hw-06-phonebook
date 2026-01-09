@@ -8,7 +8,7 @@ const ContactBox = styled.ul`
 
   padding: 0;
   margin-right: auto;
-  margin-left: 350px;
+  margin-left: 50px;
   margin-top: 0;
   margin-bottom: 0;
 `;
